@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dal.Migrations
 {
     [DbContext(typeof(ChatDbContext))]
-    [Migration("20231120183509_initKubra")]
-    partial class initKubra
+    [Migration("20231122192022_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -61,8 +61,14 @@ namespace Dal.Migrations
                     b.Property<int>("MUserId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Password")
+                        .HasColumnType("longtext");
+
                     b.Property<DateTime>("RegisterDate")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 

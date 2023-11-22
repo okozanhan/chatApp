@@ -2,6 +2,7 @@
 using Dal;
 using Dal.Context;
 using Dal.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Business;
 
@@ -14,13 +15,34 @@ public class UserService : IUserService
         _chatDbContext = chatDbContext;
     }
 
-    public Task<int> AddUser(AddUserDto addUserDto)
+    public Task<int> AddUser(AddUserDto user)
     {
-        throw new NotImplementedException();
+        var newUser = new User
+        {
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            UserName = user.UserName,
+            Password = user.Password
+        };
+
+        _chatDbContext.Users.AddAsync(newUser);
+        return _chatDbContext.SaveChangesAsync();
     }
 
-    public Task<GetUserDto> getUserById(int id)
+    public async Task<GetUserDto> getUserById(int userId)
     {
-        throw new NotImplementedException();
+        var selectedUser = await _chatDbContext.Users.Where(p => !p.IsDeleted && p.Id == userId)
+        .Select(p => new GetUserDto
+        {
+            Id = p.Id,
+            FirstName = p.FirstName,
+            LastName = p.LastName,
+            UserName = p.UserName,
+            RegisterDate = p.RegisterDate
+        }).FirstOrDefaultAsync();
+
+       return selectedUser;
+
+
     }
 }

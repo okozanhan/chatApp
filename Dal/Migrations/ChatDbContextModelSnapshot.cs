@@ -59,8 +59,14 @@ namespace Dal.Migrations
                     b.Property<int>("MUserId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Password")
+                        .HasColumnType("longtext");
+
                     b.Property<DateTime>("RegisterDate")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
