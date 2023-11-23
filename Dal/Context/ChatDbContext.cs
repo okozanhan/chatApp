@@ -1,6 +1,5 @@
 ﻿using Dal.Entity;
 using Microsoft.EntityFrameworkCore;
-using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using System.Reflection;
 
 
@@ -18,7 +17,6 @@ namespace Dal.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
 
