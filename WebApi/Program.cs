@@ -1,4 +1,6 @@
 using Business;
+using Business.Abstract;
+using Business.Concrete;
 using Dal.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +16,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<ChatDbContext>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IMessageService, MessageService>();
 
 var app = builder.Build();
 
