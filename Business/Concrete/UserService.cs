@@ -22,7 +22,8 @@ public class UserService : IUserService
             FirstName = user.FirstName,
             LastName = user.LastName,
             UserName = user.UserName,
-            Password = user.Password
+            Password = user.Password,
+            RegisterDate = DateTime.Now
         };
 
         _chatDbContext.Users.AddAsync(newUser);
@@ -41,11 +42,23 @@ public class UserService : IUserService
             RegisterDate = p.RegisterDate
         }).FirstOrDefaultAsync();
 
-       return selectedUser;
+        return selectedUser;
 
 
     }
 
+    public async Task<List<GetUserDto>> GetUserList()
+    {
+        var allUser = await _chatDbContext.Users.Where(p => !p.IsDeleted)
+        .Select(p => new GetUserDto
+        {
+            Id = p.Id,
+            FirstName = p.FirstName,
+            LastName = p.LastName,
+            UserName = p.UserName,
+            RegisterDate = p.RegisterDate
+        }).ToListAsync();
 
-   
+        return allUser;
+    }
 }

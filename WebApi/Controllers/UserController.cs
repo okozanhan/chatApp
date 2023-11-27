@@ -26,7 +26,7 @@ namespace WebApi.Controllers
             var list = new List<string>();
             try
             {
-                var user =await _userService.getUserById(id);
+                var user = await _userService.getUserById(id);
                 if (user == null)
                 {
                     list.Add("Kullanıcı bulunamadı.");
@@ -42,13 +42,35 @@ namespace WebApi.Controllers
             }
         }
 
+        [HttpGet("GetUserList")]
+        public async Task<ActionResult<List<GetUserDto>>> GetUserList()
+        {
+            var list = new List<string>();
+            try
+            {
+                var users = await _userService.GetUserList();
+                if (users == null)
+                {
+                    list.Add("Kullanıcı bulunamadı.");
+                    return BadRequest(new { code = StatusCode(1001), message = list, type = "error" });
+                }
+                return users;
+
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPost("AddUser")]
         public async Task<ActionResult<string>> AddUser(AddUserDto userDto)
         {
             var list = new List<string>();
             try
             {
-                var result =await _userService.AddUser(userDto);
+                var result = await _userService.AddUser(userDto);
                 if (result > 0)
                 {
                     list.Add("Ekleme işlemi başarılı");
