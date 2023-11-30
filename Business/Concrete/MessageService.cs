@@ -19,14 +19,14 @@ namespace Business.Concrete
             _dbContext = dbContext;
         }
 
-        public async Task<List<GetMessageList>> GetMessageLists(int clientId, int hostId)
+        public async Task<List<GetMessageList>> GetMessageLists(int SenderUserId, int ReceiverUserId)
         {
-            var message = await _dbContext.Messages.Where(p => !p.IsDeleted && p.Client == clientId && p.Host == hostId).Select(
+            var message = await _dbContext.Messages.Where(p => !p.IsDeleted && p.SenderUserId == SenderUserId && p.ReceiverUserId == ReceiverUserId).Select(
                 p => new GetMessageList
                 {
                     Id = p.Id,
-                    Client = p.Client,
-                    Host = p.Host,
+                    SenderUserId = p.SenderUserId,
+                    ReceiverUserId = p.ReceiverUserId,
                     MessageContent = p.MessageContent,
                     SendDate = p.SendDate
                 }
@@ -39,8 +39,8 @@ namespace Business.Concrete
         {
             var newMessage = new Message
             {
-                Client = sendMessage.Client,
-                Host = sendMessage.Host,
+                SenderUserId = sendMessage.SenderUserId,
+                ReceiverUserId = sendMessage.ReceiverUserId,
                 MessageContent = sendMessage.MessageContent,
                 SendDate = DateTime.Now
             };

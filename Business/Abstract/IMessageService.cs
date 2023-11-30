@@ -9,6 +9,6 @@ namespace Business.Abstract
     public interface IMessageService
     {
         Task<int> SendMessage(AddMessageDto sendMessage);
-        Task<List<GetMessageList>> GetMessageLists(int clientId, int hostId);
+        Task<List<GetMessageList>> GetMessageLists(int SenderUserId, int ReceiverUserId);
     }
 }

@@ -85,12 +85,6 @@ namespace Dal.Migrations
                     b.Property<int>("CUserId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Client")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Host")
-                        .HasColumnType("int");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
@@ -105,33 +99,48 @@ namespace Dal.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
+                    b.Property<int>("ReceiverUserId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("SendDate")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("UserId")
+                    b.Property<int>("SenderUserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("ReceiverUserId");
+
+                    b.HasIndex("SenderUserId");
 
                     b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("Dal.Message", b =>
                 {
-                    b.HasOne("Dal.Entity.User", "UserFk")
-                        .WithMany("Messages")
-                        .HasForeignKey("UserId")
+                    b.HasOne("Dal.Entity.User", "ReceiverUser")
+                        .WithMany("ReceivedMessages")
+                        .HasForeignKey("ReceiverUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("UserFk");
+                    b.HasOne("Dal.Entity.User", "SenderUser")
+                        .WithMany("SentMessages")
+                        .HasForeignKey("SenderUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ReceiverUser");
+
+                    b.Navigation("SenderUser");
                 });
 
             modelBuilder.Entity("Dal.Entity.User", b =>
                 {
-                    b.Navigation("Messages");
+                    b.Navigation("ReceivedMessages");
+
+                    b.Navigation("SentMessages");
                 });
 #pragma warning restore 612, 618
         }

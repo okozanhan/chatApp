@@ -9,16 +9,15 @@ namespace Dal
         public int Id { get; set; }
         //gönderilme tarihi
         public DateTime SendDate { get; set; }
-        // alıcı
-        public int Client { get; set; }
-        // verici
-        public int Host { get; set; }
+
         // içerik
         public string MessageContent { get; set; }
 
+        public int SenderUserId { get; set; } // Mesajı gönderen kullanıcının Id'si
+        public User SenderUser { get; set; } // Mesajı gönderen kullanıcı
 
-        public User UserFk { get; set; }
-        public int UserId { get; set; }
+        public int ReceiverUserId { get; set; } // Mesajı alan kullanıcının Id'si
+        public User ReceiverUser { get; set; } // Mesajı alan kullanıcı
 
         public bool IsDeleted { get; set; }
 

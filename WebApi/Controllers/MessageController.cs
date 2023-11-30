@@ -21,12 +21,12 @@ namespace WebApi.Controllers
         }
 
 
-        [HttpGet("GetMessageList/{clientId}/{hostId}")]
-        public async Task<ActionResult<List<GetUserDto>>> GetMessageList(int clientId, int hostId)
+        [HttpGet("GetMessageList/{SenderUserId}/{ReceiverUserId}")]
+        public async Task<ActionResult<List<GetUserDto>>> GetMessageList(int SenderUserId, int ReceiverUserId)
         {
             try
             {
-                var message = await _messageService.GetMessageLists(clientId, hostId);
+                var message = await _messageService.GetMessageLists(SenderUserId, ReceiverUserId);
                 return Ok(message);
             }
             catch (Exception ex)
@@ -44,10 +44,10 @@ namespace WebApi.Controllers
                 var result = await _messageService.SendMessage(sendMessage);
                 if(result > 0){
                     list.Add("Ekleme işlemi başarılı");
-                    return Ok(result);
+                    return Ok(list);
                 }
                 list.Add("Ekleme işlemi başarısız");
-                return Ok(result);
+                return Ok(list);
             }
             catch (Exception ex)
             {
